@@ -18,4 +18,4 @@ Every package has a tracking number, by which the package can be referred to. Ev
 
 When the package is scanned, an event occurs. An event refers to a specific package and place. Furthermore, a description and added time, date and clock time, is added to the event.  
 
-There are functions and functionality in the program. I recommend that you will start exploring with the stress test, option (i). This will give you a database with 1000 packages and 1 million events. Running the program should take no more than 50-60 seconds. 
+There are functions and functionality in the program. I recommend that you will start exploring with the stress test, option (i). This will give you a database with 1000 packages and 1 million events. Option (i) should take less than 50 seconds. 
