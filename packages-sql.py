@@ -342,29 +342,34 @@ def list_place(db):
     print("Place: ", p, "Number of events: ",count, "on date: ", date)
     cursor.execute("DROP TABLE IF EXISTS Temp_table")
 
-#Get all the packages for a specific customer
+#Get all the packages for a specific customer, and the number of events
 def list_package(db):
-    customer = get_string("Customer", "customer")  #kysy asikas
+    customer = get_string("Customer", "customer")  #ask customer
     check_customer = find_customer_name (db, customer)
     if not check_customer:
         print("Unknown customer, listing of events failed")
         return
     cursor = db.cursor()
     cursor.execute( "SELECT tracking_number FROM Package WHERE customer_name = (?)" , [customer])         
-    tr_number = cursor.fetchall()  #gives tr_number as: [('qw1',)], have to change to qw1 
-    #tr_number_orig = tr_number.copy()
+    tr_number = cursor.fetchall() 
     tr_number = str(tr_number)
-    tr_number = tr_number.replace("[('", "")   #The replace() method replaces a string with another string
-    tr_number = tr_number.replace("',)]", "")
-    sql = ("SELECT COUNT(id) FROM Event "        
+    
+    numbers = re.findall("(\d+)", tr_number)   #The regex pattern \d+ matches 1 or more numerical characters in sequence.
+            # By putting it in brackets ( ) it captures each occurrence of that pattern
+            # as a group. And the re.findall method returns those groups in a list. 
+            # Note that they are still strings, not numbers.
+    
+    for i in range(len(numbers)):
+        tr_nr = ("T" + numbers[i])
+        sql = ("SELECT COUNT(id) FROM Event "        
            "WHERE package_tracking_number = (?)")
-    cursor.execute(sql, [tr_number]) 
-    count = cursor.fetchall()
-    count = str(count)
-    count = count.replace("[(", "")  
-    count = count.replace(",)]", "")
-    print("Customer: ", customer, "paketin tracking_number: ",tr_number, "number of events: ", count)  
-
+        cursor.execute(sql, [tr_nr]) 
+        count = cursor.fetchall()
+        count = str(count)
+        count = count.replace("[(", "")  
+        count = count.replace(",)]", "")
+        print("Customer: ", customer, "package tracking_number: ", tr_nr, "number of events: ", count)  
+        
 #Get all the events for a package with a given tracking_number 
 def list_event(db):
     tr_number = get_string("Tracking_number", "tracking_number")
