@@ -21,6 +21,7 @@ import sys
 from datetime import datetime as dt
 from time import process_time
 from random import randint
+from re import findall
 
 
 def main():
@@ -353,7 +354,7 @@ def list_package(db):
     tr_number = cursor.fetchall() 
     tr_number = str(tr_number)
     
-    numbers = re.findall("(\d+)", tr_number)   #The regex pattern \d+ matches 1 or more numerical characters in sequence.
+    numbers = findall("(\d+)", tr_number)   #The regex pattern \d+ matches 1 or more numerical characters in sequence.
             # By putting it in brackets ( ) it captures each occurrence of that pattern
             # as a group. And the re.findall method returns those groups in a list. 
             # Note that they are still strings, not numbers.
