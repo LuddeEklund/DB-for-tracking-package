@@ -49,7 +49,7 @@ def main():
                     if place_counter else "Choose option (a) or (q): \n (a) Perform a database stress test,\n "
                                             "(q) quit \n")  
                     
-            valid = frozenset("bcdefghiq" if place_counter else "aq")   #A set object is an unordered collection of immutable values. 
+            valid = frozenset("bcdefghq" if place_counter else "aq")   #A set object is an unordered collection of immutable values. 
             action = get_menu_choice(menu, valid, "Your choice" if place_counter else "Choose a/q", True)  
             functions[action](db)
     finally:
