@@ -1,6 +1,8 @@
 FROM python
-WORKDIR /mydir
-ADD . /mydir
+
+RUN apt-get -y update && apt-get -y upgrade && apt-get install -y sqlite3 libsqlite3-dev
 RUN pip install -r requirements.txt
-ENV NAME packages 
+
+WORKDIR /db
+ADD . /db
 CMD ["python3", "package-sql.py"]
