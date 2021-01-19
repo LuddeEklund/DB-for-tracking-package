@@ -24,8 +24,8 @@ from random import randint
 
 
 def main():
-    functions = dict(a=add_place, b=add_place, c=add_customer, d=add_package, e=add_event, f=list_event, 
-                     g=list_package, h=list_place, i=stress_test, q=quit)  #refer to corresponding functions
+    functions = dict(a=stress_test, b=add_place, c=add_customer, d=add_package, e=add_event, f=list_event, 
+                     g=list_package, h=list_place, q=quit)  #refer to corresponding functions
     filename = os.path.join(os.path.dirname(__file__), "events.sdb")   
     db = None
     try:
@@ -43,15 +43,14 @@ def main():
                      "(f) List all events of the package when tracking number is given\n"
                      "(g) List all of the customer's packages and the corresponding number of events\n"
                      "(h) List the number of events on a given date for a place\n"
-                     #"(i) Suorita tietokannan stress_test. \n"
                      "(q) quit \n"
                      #Why not numbers? https://stackoverflow.com/questions/10390606/python-syntaxerror-with-dict1-but-1-works
 
-                    if place_counter else "Choose option (a), (i) or (q): \n (a) Create tables in an empty database and add a place,\n "
-                                            "(i) Perform a database stress test. \n (q) quit \n")  
+                    if place_counter else "Choose option (a) or (q): \n (a) Perform a database stress test,\n "
+                                            "(q) quit \n")  
                     
-            valid = frozenset("bcdefghiq" if place_counter else "aiq")   #A set object is an unordered collection of immutable values. 
-            action = get_menu_choice(menu, valid, "Your choice" if place_counter else "Choose a/i/q", True)  
+            valid = frozenset("bcdefghiq" if place_counter else "aq")   #A set object is an unordered collection of immutable values. 
+            action = get_menu_choice(menu, valid, "Your choice" if place_counter else "Choose a/q", True)  
             functions[action](db)
     finally:
         if db is not None:
